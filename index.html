@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Política de Privacidade — EduFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#050b1a;
+  --bg2:#081120;
+  --card:#0d1b2e;
+  --card2:#0a1525;
+  --cyan:#00e5ff;
+  --pink:#ff2d78;
+  --lime:#b8ff3c;
+  --violet:#9b5cff;
+  --orange:#ff7a1a;
+  --text:#e8f0fe;
+  --muted:#6a849f;
+  --border:#1a2d44;
+  --glow-c: rgba(0,229,255,.18);
+  --glow-p: rgba(255,45,120,.18);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CURSOR ── */
+.cursor{
+  position:fixed;width:12px;height:12px;
+  background:var(--cyan);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s,background .2s,width .2s,height .2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1.5px solid rgba(0,229,255,.5);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .25s cubic-bezier(.17,.67,.83,.67),opacity .2s;
+}
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor{width:24px;height:24px;background:var(--pink);}
+
+/* ── CANVAS BG ── */
+#bg-canvas{
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;opacity:.5;
+}
+
+/* ── NOISE OVERLAY ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none;opacity:.4;
+}
+
+/* ── LAYOUT ── */
+.wrap{position:relative;z-index:2}
+
+/* ── HEADER ── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,11,26,.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
+  text-decoration:none;color:var(--text);letter-spacing:-.03em;
+  display:flex;align-items:center;gap:.4rem;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.7}}
+
+.header-badge{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(0,229,255,.3);
+  color:var(--cyan);padding:.25rem .75rem;border-radius:999px;
+  background:rgba(0,229,255,.05);
+}
+
+/* ── PROGRESS BAR ── */
+#reading-bar{
+  position:fixed;top:0;left:0;height:3px;z-index:200;
+  background:linear-gradient(90deg,var(--cyan),var(--pink),var(--lime));
+  width:0%;transition:width .1s;
+  box-shadow:0 0 10px var(--cyan);
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:92vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:4rem 2rem;
+  position:relative;
+}
+
+.hero-tag{
+  font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1.5rem;
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.hero-tag::before,.hero-tag::after{
+  content:'';flex:1;height:1px;background:var(--border);width:40px;
+}
+
+.hero h1{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(3rem,9vw,7rem);
+  line-height:.95;letter-spacing:-.04em;
+  margin-bottom:1.5rem;
+}
+
+.hero h1 .line-1{display:block;color:var(--text)}
+.hero h1 .line-2{
+  display:block;
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--violet) 50%,var(--pink) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  max-width:480px;color:var(--muted);font-size:1.05rem;
+  margin-bottom:3rem;font-weight:300;
+}
+
+.hero-chips{
+  display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;
+  margin-bottom:3rem;
+}
+.chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.4rem 1rem;border-radius:999px;font-size:.8rem;font-weight:600;
+  border:1px solid;
+  animation:float-chip 4s ease-in-out infinite;
+}
+.chip:nth-child(2){animation-delay:.5s}
+.chip:nth-child(3){animation-delay:1s}
+.chip:nth-child(4){animation-delay:1.5s}
+@keyframes float-chip{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.chip-c{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.3);color:var(--cyan)}
+.chip-p{background:rgba(255,45,120,.08);border-color:rgba(255,45,120,.3);color:var(--pink)}
+.chip-l{background:rgba(184,255,60,.08);border-color:rgba(184,255,60,.3);color:var(--lime)}
+.chip-v{background:rgba(155,92,255,.08);border-color:rgba(155,92,255,.3);color:var(--violet)}
+
+.scroll-hint{
+  position:absolute;bottom:2.5rem;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  animation:bounce-hint 2s ease-in-out infinite;
+}
+@keyframes bounce-hint{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(var(--cyan),transparent)}
+
+/* ── SECTION BASE ── */
+section{padding:5rem 2rem;position:relative;z-index:2}
+.sec-inner{max-width:1000px;margin:0 auto}
+
+.sec-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;
+}
+.sec-label .dot{
+  width:6px;height:6px;border-radius:50%;
+}
+
+.sec-title{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  line-height:1.1;letter-spacing:-.03em;
+  margin-bottom:1rem;
+}
+
+/* ── DATA TABLE ── */
+.table-section{background:var(--bg2)}
+
+.table-scroll{overflow-x:auto;margin-top:2.5rem;border-radius:16px;border:1px solid var(--border)}
+
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+
+thead{background:linear-gradient(135deg,#0a1a30,#0d1f38)}
+thead th{
+  padding:1rem 1.2rem;text-align:left;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+thead th:first-child{color:var(--cyan)}
+
+tbody tr{
+  border-bottom:1px solid var(--border);
+  transition:background .2s;
+}
+tbody tr:last-child{border:none}
+tbody tr:hover{background:rgba(0,229,255,.04)}
+
+tbody td{padding:.9rem 1.2rem;vertical-align:top;color:var(--text)}
+tbody td:first-child{font-weight:600;color:var(--text)}
+tbody td:nth-child(2){text-align:center}
+
+.tag{
+  display:inline-block;padding:.2rem .6rem;border-radius:6px;
+  font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+}
+.tag-sim{background:rgba(184,255,60,.12);color:var(--lime);border:1px solid rgba(184,255,60,.25)}
+.tag-nao{background:rgba(255,45,120,.1);color:var(--pink);border:1px solid rgba(255,45,120,.2)}
+.tag-cond{background:rgba(255,122,26,.1);color:var(--orange);border:1px solid rgba(255,122,26,.2)}
+.tag-auto{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
+
+/* ── ACCORDION ── */
+.accordion-section{background:var(--bg)}
+
+.acc-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:.8rem}
+
+.acc-item{
+  border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;transition:border-color .3s,box-shadow .3s;
+  background:var(--card);
+}
+.acc-item.open{
+  border-color:rgba(0,229,255,.35);
+  box-shadow:0 0 30px rgba(0,229,255,.07);
+}
+.acc-item:nth-child(2).open{border-color:rgba(255,45,120,.35);box-shadow:0 0 30px rgba(255,45,120,.07)}
+.acc-item:nth-child(3).open{border-color:rgba(184,255,60,.35);box-shadow:0 0 30px rgba(184,255,60,.07)}
+.acc-item:nth-child(4).open{border-color:rgba(155,92,255,.35);box-shadow:0 0 30px rgba(155,92,255,.07)}
+.acc-item:nth-child(5).open{border-color:rgba(255,122,26,.35);box-shadow:0 0 30px rgba(255,122,26,.07)}
+
+.acc-header{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.2rem 1.5rem;cursor:pointer;
+  user-select:none;
+}
+
+.acc-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+
+.acc-title{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;
+  flex:1;
+}
+
+.acc-num{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  color:var(--muted);margin-right:.5rem;font-family:'Syne',sans-serif;
+}
+
+.acc-arrow{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--muted);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .2s;
+  flex-shrink:0;
+}
+.acc-item.open .acc-arrow{transform:rotate(180deg);background:rgba(0,229,255,.1);color:var(--cyan)}
+
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),padding .3s;
+  padding:0 1.5rem;
+}
+.acc-item.open .acc-body{padding-bottom:1.5rem}
+
+.acc-body p,.acc-body li{color:#9bb5cc;font-size:.95rem;line-height:1.75}
+
+.acc-body ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.acc-body li{
+  padding-left:1.4rem;position:relative;
+}
+.acc-body li::before{
+  content:'';position:absolute;left:0;top:.7em;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);
+}
+.acc-item:nth-child(2) .acc-body li::before{background:var(--pink)}
+.acc-item:nth-child(3) .acc-body li::before{background:var(--lime)}
+.acc-item:nth-child(4) .acc-body li::before{background:var(--violet)}
+.acc-item:nth-child(5) .acc-body li::before{background:var(--orange)}
+
+.divider-line{
+  height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:.75rem 0;
+}
+
+/* ── RIGHTS ── */
+.rights-section{background:var(--bg2);overflow:hidden}
+
+.rights-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1rem;margin-top:2.5rem;
+}
+
+.right-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  cursor:default;
+}
+.right-card::before{
+  content:'';position:absolute;inset:-1px;border-radius:16px;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  opacity:0;transition:opacity .3s;z-index:0;
+}
+.right-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.right-card:hover::before{opacity:.12}
+.right-card>*{position:relative;z-index:1}
+
+.right-icon{
+  font-size:2rem;margin-bottom:.75rem;
+  display:block;filter:drop-shadow(0 0 8px var(--c1));
+}
+.right-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1rem;margin-bottom:.35rem;color:var(--text);
+}
+.right-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+.right-card:nth-child(1){--c1:var(--cyan);--c2:var(--violet)}
+.right-card:nth-child(2){--c1:var(--lime);--c2:var(--cyan)}
+.right-card:nth-child(3){--c1:var(--pink);--c2:var(--orange)}
+.right-card:nth-child(4){--c1:var(--violet);--c2:var(--pink)}
+.right-card:nth-child(5){--c1:var(--orange);--c2:var(--lime)}
+.right-card:nth-child(6){--c1:var(--cyan);--c2:var(--lime)}
+.right-card:nth-child(7){--c1:var(--pink);--c2:var(--violet)}
+.right-card:nth-child(8){--c1:var(--lime);--c2:var(--orange)}
+
+/* ── CONTACT ── */
+.contact-section{background:var(--bg)}
+
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  margin-top:2.5rem;
+}
+@media(max-width:640px){.contact-grid{grid-template-columns:1fr}}
+
+.contact-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  transition:border-color .3s,box-shadow .3s;
+}
+.contact-card:hover{
+  border-color:rgba(0,229,255,.3);
+  box-shadow:0 0 40px rgba(0,229,255,.06);
+}
+.contact-card h3{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1.1rem;margin-bottom:1.25rem;
+  color:var(--cyan);
+}
+.contact-info{display:flex;flex-direction:column;gap:.7rem}
+.contact-row{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.9rem;color:var(--muted);
+}
+.contact-row .ci{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;flex-shrink:0;
+}
+.contact-row a{color:var(--cyan);text-decoration:none}
+.contact-row a:hover{text-decoration:underline}
+.contact-row strong{color:var(--text)}
+
+.anpd-box{
+  background:rgba(155,92,255,.07);border:1px solid rgba(155,92,255,.2);
+  border-radius:12px;padding:1rem 1.25rem;margin-top:1.5rem;
+  font-size:.85rem;color:#a07de8;
+}
+.anpd-box a{color:var(--violet)}
+
+/* ── FORM SECTION ── */
+.form-section{background:var(--bg2);padding:5rem 2rem 6rem}
+
+.form-inner{max-width:580px;margin:0 auto}
+
+.form-intro{margin-bottom:2.5rem}
+.form-intro .sec-label{margin-bottom:.6rem}
+.form-intro h2{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1.8rem,4vw,2.5rem);
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:.75rem;
+}
+.form-intro p{color:var(--muted);font-size:.95rem}
+
+.form-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:2.5rem;
+  box-shadow:0 40px 80px rgba(0,0,0,.3);
+}
+
+.field{margin-bottom:1.4rem;position:relative}
+
+.field-label{
+  display:block;font-size:.74rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;
+  transition:color .2s;
+}
+.field:focus-within .field-label{color:var(--cyan)}
+
+.field-input{
+  width:100%;padding:.8rem 1rem;
+  background:#060e1c;border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;
+  outline:none;transition:border-color .25s,box-shadow .25s;
+  appearance:none;
+}
+.field-input::placeholder{color:var(--muted);opacity:.6}
+.field-input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,.1);
+}
+.field-input.has-error{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,120,.1)}
+
+.field-error{
+  display:none;font-size:.77rem;color:var(--pink);
+  margin-top:.35rem;font-weight:500;
+  align-items:center;gap:.3rem;
+}
+.field-error.show{display:flex}
+
+/* CHECKBOX */
+.check-wrapper{
+  background:rgba(0,229,255,.04);
+  border:1.5px solid rgba(0,229,255,.2);
+  border-radius:12px;padding:1rem 1.25rem;
+  margin-bottom:.5rem;
+  display:flex;align-items:flex-start;gap:.85rem;
+  transition:border-color .2s,background .2s;
+  cursor:pointer;
+}
+.check-wrapper:hover{
+  background:rgba(0,229,255,.07);
+  border-color:rgba(0,229,255,.4);
+}
+.check-wrapper input[type="checkbox"]{
+  width:18px;height:18px;flex-shrink:0;margin-top:.2rem;
+  accent-color:var(--cyan);cursor:pointer;
+}
+.check-text{
+  font-size:.88rem;color:var(--muted);line-height:1.6;cursor:pointer;
+}
+.check-text a{color:var(--cyan);font-weight:600;text-decoration:none}
+.check-text a:hover{text-decoration:underline}
+
+/* BUTTON */
+.btn-send{
+  width:100%;padding:1rem;margin-top:1.25rem;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  border:none;border-radius:12px;
+  color:#050b1a;font-family:'Syne',sans-serif;
+  font-weight:800;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;
+  transition:opacity .2s,transform .15s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.btn-send::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.2));
+  opacity:0;transition:opacity .2s;
+}
+.btn-send:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,229,255,.25)}
+.btn-send:hover::after{opacity:1}
+.btn-send:active{transform:translateY(0)}
+.btn-send:disabled{
+  background:var(--border);color:var(--muted);
+  cursor:not-allowed;transform:none;box-shadow:none;
+}
+
+/* SUCCESS */
+.success-box{
+  display:none;text-align:center;padding:2.5rem;
+}
+.success-box.show{display:block}
+.success-box .s-icon{
+  font-size:3rem;margin-bottom:1rem;
+  animation:pop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.success-box h3{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
+  color:var(--lime);margin-bottom:.5rem;
+}
+.success-box p{color:var(--muted);font-size:.9rem}
+
+/* ── FOOTER ── */
+footer{
+  background:#020810;
+  border-top:1px solid var(--border);
+  padding:3rem 2rem 2rem;
+  text-align:center;position:relative;z-index:2;
+}
+.footer-logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;
+  letter-spacing:-.04em;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:1.5rem;display:block;
+}
+.footer-links{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.5rem;
+  margin-bottom:2rem;
+}
+footer a{
+  color:var(--muted);text-decoration:none;font-size:.85rem;
+  transition:color .2s;
+}
+footer a:hover{color:var(--cyan)}
+.footer-copy{font-size:.78rem;color:#2a3a4a}
+.footer-lgpd{
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:.75rem;font-size:.72rem;
+  color:rgba(0,229,255,.4);letter-spacing:.08em;
+}
+
+/* ── ANIMATE IN ── */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  header{padding:.75rem 1.25rem}
+  .hero h1{font-size:2.8rem}
+  .form-card{padding:1.5rem}
+  section{padding:3.5rem 1.25rem}
+  .acc-title{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<div id="reading-bar"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#"><span class="logo-dot"></span>EduFlow</a>
+  <span class="header-badge">⚖ LGPD Compliant</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">Política de Privacidade · v1.0 · 2025</p>
+  <h1>
+    <span class="line-1">Seus dados,</span>
+    <span class="line-2">sua proteção.</span>
+  </h1>
+  <p class="hero-sub">Transparência total sobre como coletamos, usamos e protegemos suas informações na plataforma EduFlow.</p>
+  <div class="hero-chips">
+    <span class="chip chip-c">🔐 Criptografia AES-256</span>
+    <span class="chip chip-p">🚫 Não vendemos dados</span>
+    <span class="chip chip-l">✅ Conforme LGPD</span>
+    <span class="chip chip-v">👁 Total transparência</span>
+  </div>
+  <div class="scroll-hint">
+    <span>role para ler</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- TABELA DE DADOS -->
+<section class="table-section">
+<div class="sec-inner reveal">
+  <div class="sec-label" style="color:var(--cyan)">
+    <span class="dot" style="background:var(--cyan);box-shadow:0 0 8px var(--cyan)"></span>
+    Seção 01
+  </div>
+  <h2 class="sec-title">Dados que coletamos</h2>
+  <p style="color:var(--muted);max-width:520px">Mapeamento completo de todos os dados pessoais tratados pela EduFlow conforme a LGPD.</p>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de Dado</th>
+          <th>Obrigatório</th>
+          <th>Finalidade</th>
+          <th>Armazenamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>📛 Nome completo</td><td><span class="tag tag-sim">Sim</span></td><td>Identificação e certificados</td><td>BD criptografado · 5 anos</td></tr>
+        <tr><td>📧 Endereço de e-mail</td><td><span class="tag tag-sim">Sim</span></td><td>Login, comunicações e recuperação</td><td>BD criptografado · 5 anos</td></tr>
+        <tr><td>📱 Número de telefone</td><td><span class="tag tag-nao">Não</span></td><td>Autenticação 2FA opcional</td><td>BD · enquanto conta ativa</td></tr>
+        <tr><td>🪪 CPF</td><td><span class="tag tag-cond">Condicional</span></td><td>Nota fiscal e certificados oficiais</td><td>BD criptografado · 5 anos</td></tr>
+        <tr><td>🌐 Endereço IP</td><td><span class="tag tag-auto">Automático</span></td><td>Segurança e prevenção a fraudes</td><td>Logs seguros · 6 meses</td></tr>
+        <tr><td>🖱 Dados de navegação</td><td><span class="tag tag-auto">Automático</span></td><td>Melhoria da experiência</td><td>Anonimizados após 90 dias</td></tr>
+        <tr><td>🍪 Cookies de sessão</td><td><span class="tag tag-auto">Automático</span></td><td>Manter sessão ativa</td><td>Navegador · expiram ao fechar</td></tr>
+        <tr><td>⚙️ Cookies de preferência</td><td><span class="tag tag-nao">Opcional</span></td><td>Tema, idioma e configurações</td><td>Local · até 1 ano</td></tr>
+        <tr><td>📚 Progresso nos cursos</td><td><span class="tag tag-auto">Automático</span></td><td>Acompanhamento e certificação</td><td>BD · enquanto conta existir</td></tr>
+        <tr><td>💳 Dados de pagamento</td><td><span class="tag tag-cond">Condicional</span></td><td>Processamento de compras</td><td>Tokenizado PCI-DSS · sem cartão</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ACORDEÃO DE SEÇÕES -->
+<section class="accordion-section">
+<div class="sec-inner reveal">
+  <div class="sec-label" style="color:var(--pink)">
+    <span class="dot" style="background:var(--pink);box-shadow:0 0 8px var(--pink)"></span>
+    Seções 02 – 06
+  </div>
+  <h2 class="sec-title">Detalhes da Política</h2>
+  <p style="color:var(--muted);max-width:480px">Clique em cada seção para expandir e ler os detalhes completos.</p>
+
+  <div class="acc-list">
+
+    <!-- FINALIDADE -->
+    <div class="acc-item open" data-acc>
+      <div class="acc-header">
+        <div class="acc-icon" style="background:rgba(0,229,255,.1);color:var(--cyan)">🎯</div>
+        <span class="acc-num">02</span>
+        <span class="acc-title">Finalidade do Uso</span>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="acc-body">
+        <p>Os dados coletados são utilizados <strong>exclusivamente</strong> para:</p>
+        <ul>
+          <li><strong>Prestação do serviço:</strong> criação de contas, acesso a cursos e emissão de certificados.</li>
+          <li><strong>Comunicação:</strong> confirmações, atualizações e lembretes de progresso — somente com seu consentimento.</li>
+          <li><strong>Segurança:</strong> prevenção de acessos não autorizados e detecção de fraudes.</li>
+          <li><strong>Melhoria da plataforma:</strong> análise de comportamento agregado e anônimo.</li>
+          <li><strong>Cumprimento legal:</strong> obrigações do Marco Civil da Internet e legislação fiscal.</li>
+          <li><strong>Financeiro:</strong> processamento de pagamentos e emissão de notas fiscais.</li>
+        </ul>
+        <div class="divider-line"></div>
+        <p>A EduFlow <strong>não utiliza</strong> dados para publicidade de terceiros, nem para decisões automatizadas sem revisão humana.</p>
+      </div>
+    </div>
+
+    <!-- COMPARTILHAMENTO -->
+    <div class="acc-item" data-acc>
+      <div class="acc-header">
+        <div class="acc-icon" style="background:rgba(255,45,120,.1);color:var(--pink)">🤝</div>
+        <span class="acc-num">03</span>
+        <span class="acc-title">Compartilhamento de Dados</span>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="acc-body">
+        <p>A EduFlow <strong>não vende</strong> dados pessoais. O compartilhamento ocorre apenas em:</p>
+        <ul>
+          <li><strong>Gateways de pagamento:</strong> dados mínimos para parceiros PCI-DSS (Stripe, PagSeguro).</li>
+          <li><strong>Infraestrutura cloud:</strong> AWS e Google Cloud atuam como operadores sob contrato de confidencialidade.</li>
+          <li><strong>Analytics:</strong> dados anônimos e agregados para Google Analytics.</li>
+          <li><strong>Obrigação legal:</strong> quando exigido por autoridade competente via ordem judicial.</li>
+          <li><strong>Com consentimento:</strong> em qualquer outra situação, somente com sua autorização explícita.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COOKIES -->
+    <div class="acc-item" data-acc>
+      <div class="acc-header">
+        <div class="acc-icon" style="background:rgba(184,255,60,.1);color:var(--lime)">🍪</div>
+        <span class="acc-num">04</span>
+        <span class="acc-title">Uso de Cookies</span>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="acc-body">
+        <p>Utilizamos cookies e tecnologias similares para:</p>
+        <ul>
+          <li><strong>Cookies essenciais:</strong> funcionamento básico — manutenção de sessão. Não podem ser desativados.</li>
+          <li><strong>Cookies de desempenho:</strong> informações anônimas de navegação para identificar melhorias.</li>
+          <li><strong>Cookies de funcionalidade:</strong> lembram tema, idioma e preferências do usuário.</li>
+          <li><strong>Cookies analíticos:</strong> Google Analytics para padrões de uso de forma agregada.</li>
+        </ul>
+        <div class="divider-line"></div>
+        <p>Você pode gerenciar cookies não essenciais no banner de consentimento ou nas configurações do seu navegador.</p>
+      </div>
+    </div>
+
+    <!-- SEGURANÇA -->
+    <div class="acc-item" data-acc>
+      <div class="acc-header">
+        <div class="acc-icon" style="background:rgba(155,92,255,.1);color:var(--violet)">🔒</div>
+        <span class="acc-num">05</span>
+        <span class="acc-title">Armazenamento e Segurança</span>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="acc-body">
+        <p>Servidores no Brasil e/ou UE com as seguintes proteções técnicas:</p>
+        <ul>
+          <li><strong>TLS 1.3</strong> — criptografia em trânsito para todas as comunicações.</li>
+          <li><strong>AES-256</strong> — criptografia em repouso para dados sensíveis em BD.</li>
+          <li><strong>MFA</strong> — autenticação multifator para acesso administrativo.</li>
+          <li><strong>RBAC</strong> — controle de acesso por função; apenas pessoal autorizado acessa dados.</li>
+          <li><strong>Backups</strong> — criptografados, retenção 30 dias, local geograficamente separado.</li>
+          <li><strong>Pentest</strong> — testes de penetração anuais por empresa especializada.</li>
+          <li><strong>Resposta a incidentes</strong> — notificação à ANPD e titulares em até 72 horas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- INTRODUÇÃO -->
+    <div class="acc-item" data-acc>
+      <div class="acc-header">
+        <div class="acc-icon" style="background:rgba(255,122,26,.1);color:var(--orange)">📄</div>
+        <span class="acc-num">01</span>
+        <span class="acc-title">Introdução e Responsável</span>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="acc-body">
+        <p>A <strong>EduFlow Plataforma Educacional Ltda.</strong>, CNPJ 00.000.000/0001-00, com sede na Rua das Flores, 123 — São Paulo/SP, é a controladora dos dados pessoais dos usuários desta plataforma.</p>
+        <div class="divider-line"></div>
+        <p>Esta Política é redigida em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD) — Lei nº 13.709/2018</strong> e poderá ser atualizada periodicamente. Ao usar a EduFlow, você declara ter lido e aceito estes termos.</p>
+      </div>
+    </div>
+
+  </div><!-- /acc-list -->
+</div>
+</section>
+
+<!-- DIREITOS DO USUÁRIO -->
+<section class="rights-section">
+<div class="sec-inner reveal">
+  <div class="sec-label" style="color:var(--lime)">
+    <span class="dot" style="background:var(--lime);box-shadow:0 0 8px var(--lime)"></span>
+    Seção 07
+  </div>
+  <h2 class="sec-title">Seus direitos (Art. 18 LGPD)</h2>
+  <p style="color:var(--muted);max-width:480px">Você tem controle total sobre seus dados pessoais. Passe o mouse para ver cada direito.</p>
+
+  <div class="rights-grid">
+    <div class="right-card"><span class="right-icon">👁</span><div class="right-title">Acesso</div><div class="right-desc">Solicite confirmação e cópia de todos os dados que mantemos sobre você.</div></div>
+    <div class="right-card"><span class="right-icon">✏️</span><div class="right-title">Correção</div><div class="right-desc">Peça atualização de dados incompletos, inexatos ou desatualizados.</div></div>
+    <div class="right-card"><span class="right-icon">🗑️</span><div class="right-title">Exclusão</div><div class="right-desc">Requeira eliminação de dados tratados com base em consentimento.</div></div>
+    <div class="right-card"><span class="right-icon">⏸️</span><div class="right-title">Bloqueio</div><div class="right-desc">Suspenda o tratamento de dados desnecessários ou excessivos.</div></div>
+    <div class="right-card"><span class="right-icon">📦</span><div class="right-title">Portabilidade</div><div class="right-desc">Receba seus dados em formato estruturado para migrar a outro serviço.</div></div>
+    <div class="right-card"><span class="right-icon">🚫</span><div class="right-title">Oposição</div><div class="right-desc">Oponha-se ao tratamento baseado em legítimo interesse.</div></div>
+    <div class="right-card"><span class="right-icon">ℹ️</span><div class="right-title">Informação</div><div class="right-desc">Conheça as entidades com quem compartilhamos seus dados.</div></div>
+    <div class="right-card"><span class="right-icon">↩️</span><div class="right-title">Revogação</div><div class="right-desc">Revogue o consentimento a qualquer momento, sem penalidades.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- CONTATO -->
+<section class="contact-section">
+<div class="sec-inner reveal">
+  <div class="sec-label" style="color:var(--violet)">
+    <span class="dot" style="background:var(--violet);box-shadow:0 0 8px var(--violet)"></span>
+    Seção 08
+  </div>
+  <h2 class="sec-title">Fale com o DPO</h2>
+  <p style="color:var(--muted);max-width:480px">Nosso Encarregado de Proteção de Dados está disponível para qualquer dúvida, solicitação ou reclamação.</p>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>🛡 Encarregado (DPO)</h3>
+      <div class="contact-info">
+        <div class="contact-row"><span class="ci">👤</span><span><strong>Ana Paula Ferreira</strong></span></div>
+        <div class="contact-row"><span class="ci">📧</span><a href="mailto:privacidade@eduflow.com.br">privacidade@eduflow.com.br</a></div>
+        <div class="contact-row"><span class="ci">📞</span><span>(11) 3000-0000 — seg–sex 9h–18h</span></div>
+        <div class="contact-row"><span class="ci">📮</span><span>Rua das Flores, 123 — Sala 501<br>São Paulo/SP · CEP 01310-100</span></div>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3 style="color:var(--violet)">⏱ Prazos de Resposta</h3>
+      <div class="contact-info">
+        <div class="contact-row"><span class="ci" style="background:rgba(184,255,60,.08);border-color:rgba(184,255,60,.2)">✅</span><span>Confirmação de recebimento: <strong>24h</strong></span></div>
+        <div class="contact-row"><span class="ci" style="background:rgba(255,122,26,.08);border-color:rgba(255,122,26,.2)">📋</span><span>Resposta completa: <strong>15 dias úteis</strong></span></div>
+        <div class="contact-row"><span class="ci" style="background:rgba(255,45,120,.08);border-color:rgba(255,45,120,.2)">🚨</span><span>Incidente de segurança: <strong>72 horas</strong></span></div>
+        <div class="contact-row"><span class="ci" style="background:rgba(155,92,255,.08);border-color:rgba(155,92,255,.2)">⚖️</span><span>Recurso negado: <strong>15 dias úteis</strong></span></div>
+      </div>
+      <div class="anpd-box">
+        Você também pode reclamar diretamente à <strong>ANPD</strong> pelo site <a href="https://www.gov.br/anpd" target="_blank">gov.br/anpd</a>.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="cadastro">
+<div class="form-inner">
+  <div class="form-intro reveal">
+    <div class="sec-label" style="color:var(--cyan)">
+      <span class="dot" style="background:var(--cyan);box-shadow:0 0 8px var(--cyan)"></span>
+      Cadastro
+    </div>
+    <h2>Comece a aprender<br><span style="color:var(--cyan)">hoje mesmo</span></h2>
+    <p>Crie sua conta gratuitamente. O aceite da Política de Privacidade é obrigatório.</p>
+  </div>
+
+  <div class="form-card reveal" id="form-card">
+
+    <div id="form-fields">
+      <div class="field">
+        <label class="field-label" for="f-nome">Nome completo *</label>
+        <input class="field-input" type="text" id="f-nome" placeholder="Seu nome completo"/>
+        <div class="field-error" id="e-nome">⚠ Por favor, informe seu nome completo.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-email">E-mail *</label>
+        <input class="field-input" type="email" id="f-email" placeholder="voce@email.com"/>
+        <div class="field-error" id="e-email">⚠ Informe um endereço de e-mail válido.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-tel">Telefone (opcional)</label>
+        <input class="field-input" type="tel" id="f-tel" placeholder="(11) 9 0000-0000"/>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-area">Área de interesse *</label>
+        <select class="field-input" id="f-area">
+          <option value="">Selecione uma área…</option>
+          <option>Desenvolvimento Web</option>
+          <option>Ciência de Dados</option>
+          <option>Design UX/UI</option>
+          <option>Marketing Digital</option>
+          <option>Gestão e Negócios</option>
+          <option>Cibersegurança</option>
+        </select>
+        <div class="field-error" id="e-area">⚠ Selecione sua área de interesse.</div>
+      </div>
+
+      <!-- ✅ CHECKBOX OBRIGATÓRIO -->
+      <label class="check-wrapper">
+        <input type="checkbox" id="chk-politica"/>
+        <span class="check-text">
+          Li e aceito a <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Política de Privacidade</a> da EduFlow, incluindo a coleta e tratamento dos meus dados pessoais conforme descrito neste documento. *
+        </span>
+      </label>
+      <div class="field-error" id="e-chk" style="margin-bottom:.75rem">⚠ Você deve aceitar a Política de Privacidade para continuar.</div>
+
+      <button class="btn-send" id="btn-cadastro" onclick="enviarForm()">
+        Criar minha conta →
+      </button>
+    </div>
+
+    <div class="success-box" id="success-box">
+      <div class="s-icon">🎉</div>
+      <h3>Bem-vindo à EduFlow!</h3>
+      <p>Seu cadastro foi realizado. Verifique seu e-mail para confirmar a conta e começar a aprender.</p>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">EduFlow</span>
+  <div class="footer-links">
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Termos de Uso</a>
+    <a href="#">Cookies</a>
+    <a href="#cadastro">Cadastro</a>
+    <a href="#">Fale com o DPO</a>
+    <a href="#">Central de Ajuda</a>
+  </div>
+  <div class="footer-copy">© 2025 EduFlow Plataforma Educacional Ltda. · CNPJ 00.000.000/0001-00</div>
+  <div class="footer-lgpd">⚖ Em conformidade com a LGPD — Lei nº 13.709/2018</div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cur');
+const curR = document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animRing)})();
+
+/* ── READING BAR ── */
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement;
+  const pct=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;
+  document.getElementById('reading-bar').style.width=pct+'%';
+});
+
+/* ── CANVAS PARTICLES ── */
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;init()}
+const COLORS=['#00e5ff','#ff2d78','#b8ff3c','#9b5cff','#ff7a1a'];
+function init(){
+  pts=[];
+  for(let i=0;i<55;i++){
+    pts.push({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+      r:Math.random()*1.5+.5,
+      c:COLORS[Math.floor(Math.random()*COLORS.length)]
+    });
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;
+    if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.c;ctx.fill();
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j];
+      const d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<130){
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+        ctx.strokeStyle=p.c+''+Math.round((1-d/130)*25).toString(16).padStart(2,'0');
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);resize();draw();
+
+/* ── ACCORDION ── */
+document.querySelectorAll('[data-acc]').forEach(item=>{
+  const header=item.querySelector('.acc-header');
+  const body=item.querySelector('.acc-body');
+  function setHeight(){
+    if(item.classList.contains('open')){
+      body.style.maxHeight=body.scrollHeight+'px';
+    } else {
+      body.style.maxHeight='0';
+    }
+  }
+  setHeight();
+  header.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    // close all
+    document.querySelectorAll('[data-acc]').forEach(a=>{
+      a.classList.remove('open');
+      a.querySelector('.acc-body').style.maxHeight='0';
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      body.style.maxHeight=body.scrollHeight+'px';
+    }
+  });
+});
+
+/* ── REVEAL ON SCROLL ── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── FORM VALIDATION ── */
+function enviarForm(){
+  let ok=true;
+  const clear=id=>{
+    document.getElementById(id).classList.remove('show');
+    document.getElementById(id.replace('e-','f-'))?.classList.remove('has-error');
+  };
+  const error=(eid,fid)=>{
+    document.getElementById(eid).classList.add('show');
+    if(fid)document.getElementById(fid).classList.add('has-error');
+    ok=false;
+  };
+
+  ['e-nome','e-email','e-area','e-chk'].forEach(clear);
+
+  const nome=document.getElementById('f-nome').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const area=document.getElementById('f-area').value;
+  const chk=document.getElementById('chk-politica').checked;
+
+  if(nome.length<3) error('e-nome','f-nome');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) error('e-email','f-email');
+  if(!area) error('e-area','f-area');
+
+  // ✅ Bloqueia envio se checkbox não marcado
+  if(!chk) error('e-chk',null);
+
+  if(ok){
+    document.getElementById('form-fields').style.display='none';
+    document.getElementById('success-box').classList.add('show');
+  }
+}
+</script>
+</body>
+</html>
